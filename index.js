@@ -82,7 +82,10 @@ const decodeSwapFunction = (txInput) => {
 // Listen for pending transactions
 const init = () => {
     // Read contract addresses from contract.txt in the array
-    const contracts = fs.readFileSync("contracts.txt", "utf-8").split("\n");
+    const contracts = fs.readFileSync("contracts.txt", "utf-8")
+        .split("\n")
+        .map(addr => addr.trim().toLowerCase())
+        .filter(addr => addr.length > 0);
 
     provider.on("pending", async (txHash) => {
         try {

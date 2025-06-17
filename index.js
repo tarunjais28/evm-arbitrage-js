@@ -38,7 +38,7 @@ const funcNames = [
     "swapTokensForExactTokens"
 ];
 
-const decodeSwapFunction = (txInput) => {
+const decodeSwapFunction = (txInput, contracts) => {
     // === Decode the function selector ===
     const selector = txInput.slice(0, 10);
     let matched = null;
@@ -52,7 +52,7 @@ const decodeSwapFunction = (txInput) => {
     }
 
     if (!matched) {
-        return;
+        return null;
     }
 
     // === Decode calldata ===
@@ -76,7 +76,11 @@ const decodeSwapFunction = (txInput) => {
     if (decoded.deadline) {
         console.log("Deadline:", decoded.deadline.toString());
     }
-    return true;
+
+    let addresses =decoded.path.map((a) => a.toLowerCase());
+    addresses.push(decoded.to.toLowerCase());
+
+    return addresses;
 };
 
 // Listen for pending transactions
@@ -92,13 +96,17 @@ const init = () => {
             const tx = await provider.getTransaction(txHash);
             if (tx) {
                 if (tx.data.length > 4) {
-                    if (decodeSwapFunction(tx.data)) {
-                        if (contracts.includes(tx.to.toLocaleLowerCase())) {
-                            console.log(`Found: ${tx.to}`);
+                    let addresses = decodeSwapFunction(tx.data, contracts);
+                    if (addresses) {
+                        addresses.push(tx.to.toLowerCase());
+                        addresses.push(tx.from.toLowerCase());
+
+                        for (const address of addresses) {
+                            if (contracts.includes(address)) {
+                                console.log(`Found: ${address}`);
+                            }
                         }
-                        if (contracts.includes(tx.from.toLocaleLowerCase())) {
-                            console.log(`Found: ${tx.from}`);
-                        }
+                        
                         console.log(`to: ${tx.to}`);
                         console.log(`from: ${tx.from}`);
                         console.log(`tx: ${tx.hash}`);

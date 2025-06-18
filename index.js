@@ -1,7 +1,8 @@
 const fs = require("fs");
 const { ethers } = require("ethers");
-const { keccak256, getAddress } = require("ethers");
 const IUniswapV2Factory = require("@uniswap/v2-core/build/IUniswapV2Factory.json");
+const IUniswapV2Router02 = require('@uniswap/v2-periphery/build/IUniswapV2Router02.json');
+const ERC20Abi = require('erc-20-abi');
 
 const factoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 
@@ -19,8 +20,7 @@ const factoryContract = new ethers.Contract(
 );
 
 // === Load ABI ===
-const abi = require("./uniswap_routerv2_abi.json");
-const iface = new ethers.Interface(abi);
+const iface = new ethers.Interface(IUniswapV2Router02.abi);
 
 // === Function Identifiers to Logical Names ===
 const swapFunctions = {
@@ -143,7 +143,7 @@ const decodeSwapFunction = async (tx, contracts) => {
   }
 
   if (!matched) {
-    return false;
+    return; // Skip to next transaction if no matching function is found
   }
 
   // === Decode calldata ===
@@ -151,10 +151,13 @@ const decodeSwapFunction = async (tx, contracts) => {
 
   let symbols = [];
   for (const path of decoded.path) {
-    let symbol = tokenAddressToSymbol.get(path.toLowerCase());
-    if (symbol) {
-      symbols.push(symbol);
-    }
+      const token = new ethers.Contract(path, ERC20Abi, provider);
+      try {
+        const symbol = await token.symbol();
+        symbols.push(symbol);
+      } catch (error) {
+        console.error(`Error getting symbol for token ${path}:`, error);
+      }
   }
 
   // === Display Output ===

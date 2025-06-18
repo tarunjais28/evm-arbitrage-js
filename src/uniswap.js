@@ -81,10 +81,6 @@ const decodeSwapFunction = async (tx, contracts) => {
     console.log("To:", decoded.to);
   }
 
-  if (decoded.deadline) {
-    console.log("Deadline:", decoded.deadline.toString());
-  }
-
   let poolAddresses = [];
   for (let i = 0; i < decoded.path.length - 1; i++) {
     let address = await getPairAddress(decoded.path[i], decoded.path[i + 1]);

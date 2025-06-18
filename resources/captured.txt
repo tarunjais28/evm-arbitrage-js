@@ -52,3 +52,353 @@ to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
 from: 0x4Ca9ee5004390c0E58AbD3B3ed83826293935201
 tx: 0x232f9dfeb7322e0d1e28984549296b518bd3a9c487b3bda371900f59b38c424d
 ====================================================================================================
+Function: swapExactTokensForETH
+Arguments:
+  amountIn: 263000000
+  amountOutMin: 104670095174265490
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]
+Tokens: ["USDT","WETH"]
+Possible LPs: []
+To: 0x7b20522Da7f2Ca1051Ec2Ea369458E0148549172
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x7b20522Da7f2Ca1051Ec2Ea369458E0148549172
+Transaction hash: 0x364b3718ffd76995774ce215f56683054f8b09bf81208e26f632a3679db3f582
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 500000000
+  amountOutMin: 29571104766769150272
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+Possible LPs: []
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0x793c167cf6d22a2974c55f7177da82288b01539fd171720a0ae7389c033b1531
+====================================================================================================
+^C
+tarunjaiswal@Taruns-MacBook-Air evm-arbitrage-js % node index
+Listening for pending transactions...
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 17222745953481417
+  amountOutMin: 181986093
+Path: ["0x614f611300d8fb0108fa2a860dbca1ff8fc62624","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xdac17f958d2ee523a2206206994597c13d831ec7"]
+Tokens: ["p e p e","WETH","USDT"]
+To: 0xF9c58aeF59f89CBe8948c82435a7542B3b2B67C5
+Pool Addresses: ["0x74b00e5197525554Eb463589D0E3D7Da547b067d","0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xF9c58aeF59f89CBe8948c82435a7542B3b2B67C5
+Transaction hash: 0xe501b2b7491c2d4685381a7ba954322a1410f2976bf70955033a0281d08b6812
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 1000000000
+  amountOutMin: 60717725710000149282
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x631dC70cae137Fa0f8895FF6057d43A2398f1d92
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x2973A0da0CBD8a3bd7A6AeaB4B62a1365A22139c
+Transaction hash: 0xfef7864c6c177d59a72820acf9ffc3bd531695e97118f4d5839e7d93c3d5b7f4
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 800000000
+  amountOutMin: 48621121191126616338
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x54130c0F6D7C39e4129AEDc56Dd1A8a458918D8E
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x2973A0da0CBD8a3bd7A6AeaB4B62a1365A22139c
+Transaction hash: 0xc36c43f4d744b9f3f85c79bb891493b7329762e9313f5ecea4907aa02dbf7e14
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4776055
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+Tokens: ["WETH","USDC"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x11bed5124a2072728f8901f0b52ac90f46f41af39148714ecf5a30ce7ce31c1f
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 500000000
+  amountOutMin: 29610006596666721647
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0x1e7bf65e4498d5a431d7de74d0ef91b7b3814cc3d5439d87abea3dd2e6071016
+====================================================================================================
+^[Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 156000000
+  amountOutMin: 15181652537729196
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x614f611300d8fb0108fa2a860dbca1ff8fc62624"]
+Tokens: ["USDT","WETH","p e p e"]
+To: 0xF9c58aeF59f89CBe8948c82435a7542B3b2B67C5
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x74b00e5197525554Eb463589D0E3D7Da547b067d"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xF9c58aeF59f89CBe8948c82435a7542B3b2B67C5
+Transaction hash: 0xa8a7daab23417a34208a06279688157d6b09c99e01fbc2b1c139801a86e73483
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 600000000
+  amountOutMin: 38267309789091388313
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0x4d90eabe661c494de15dbf6b3d7e99a0a5aa6bea0a1b50bbd859c499a4710dec
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 600000000
+  amountOutMin: 37903841614520122472
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0xe2cef303d2a6a1d2d4c6d3d4ca27743643d4110f26e8e4837821527e10fe28f5
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 100000000
+  amountOutMin: 15795630380268079
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x614f611300d8fb0108fa2a860dbca1ff8fc62624"]
+Tokens: ["USDT","WETH","p e p e"]
+To: 0xF9c58aeF59f89CBe8948c82435a7542B3b2B67C5
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x74b00e5197525554Eb463589D0E3D7Da547b067d"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xF9c58aeF59f89CBe8948c82435a7542B3b2B67C5
+Transaction hash: 0x9ca16b3bd087842447879114969a7ca033b3ca3ce3dad467d0dcc718065b0499
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4795418
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+Tokens: ["WETH","USDC"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x278f92246a0c37ceed2f57672f5b4010fc9e70f77aacd63fbb35a9541150df25
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 600000000
+  amountOutMin: 37308140105101911131
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0xd6b5fafe4efffe94d7ccd994ce0c96a54f2e03b817923790ed16e739cbce3105
+====================================================================================================
+Function: swapTokensForExactTokens
+Arguments:
+  amountOut: 20000000000000000000
+  amountInMax: 323493812
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x1b6b06E240f6d6bDC946a809520A5B79D2Ac862A
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x4Ca9ee5004390c0E58AbD3B3ed83826293935201
+Transaction hash: 0xfe58d615e8c1b099dd1ce90a4c4f97ec71495afdd47da4107166e5566d59834a
+====================================================================================================
+Function: swapTokensForExactTokens
+Arguments:
+  amountOut: 20000000000000000000
+  amountInMax: 320783589
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x1b6b06E240f6d6bDC946a809520A5B79D2Ac862A
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x4Ca9ee5004390c0E58AbD3B3ed83826293935201
+Transaction hash: 0x93b48c7269f7d6addb0de575adf0bcfb3a92efcf61ffda907a0e682c1351d2b7
+====================================================================================================
+Function: swapTokensForExactTokens
+Arguments:
+  amountOut: 20000000000000000000
+  amountInMax: 320779394
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x1b6b06E240f6d6bDC946a809520A5B79D2Ac862A
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x4Ca9ee5004390c0E58AbD3B3ed83826293935201
+Transaction hash: 0x2d8b7ca8a6642fbf2879424362dbbe02568dce94d1a2feaf0f00f06b287f180b
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4795026
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+Tokens: ["WETH","USDC"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x9dbe3678a6d8c53e9114e00c18bd354624cedb06b2f60a883bda4d0ee8aeecd6
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4795185
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+Tokens: ["WETH","USDC"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x49a642259754300c8cf4f7326774612d5e9fd081840b26be3b8798657d7a21a2
+====================================================================================================
+Function: swapExactTokensForETH
+Arguments:
+  amountIn: 26115947
+  amountOutMin: 9771634861881014
+Path: ["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]
+Tokens: ["USDC","WETH"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x1d6777904ca62160947e9c731cb7f94bb035a1722e921677d1bf674862785e52
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 400000000
+  amountOutMin: 25398606121626314636
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0x894d997a7fbdfdae58a680106ebef397a6a58725ea6c41f05b4faa36c5db2a12
+====================================================================================================
+Function: swapTokensForExactTokens
+Arguments:
+  amountOut: 20000000000000000000
+  amountInMax: 317132645
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x1b6b06E240f6d6bDC946a809520A5B79D2Ac862A
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x4Ca9ee5004390c0E58AbD3B3ed83826293935201
+Transaction hash: 0xb242406f001c7e6f2ed4956a9fdd614b1337febfb647612cc7ed9c4dcc526882
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4793018
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+Tokens: ["WETH","USDC"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x9229558acf28dfe110940cdfb2db8b655bf17483b9bf216106cd3bbb42af0fbb
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4793225
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+Tokens: ["WETH","USDC"]
+To: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Pool Addresses: ["0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"]
+Found Matching LP: 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x8ff6f58Fef60D4b220e39F3C598C5037Ee29b632
+Transaction hash: 0x39725344b25272413f5989065e06809a267c62056a2f43fcdab11bcb34c1b713
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 600000000
+  amountOutMin: 36593055391863077275
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0x0f7b78b1e070a028b600b095d51c5c14e3f2e2e2d75efff94899f104cc2397b5
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 1000000000
+  amountOutMin: 63207403040987040319
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x631dC70cae137Fa0f8895FF6057d43A2398f1d92
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x2973A0da0CBD8a3bd7A6AeaB4B62a1365A22139c
+Transaction hash: 0x90c8dfee14638c6faa440721b299f99444fc1ff037d06c2eb943195d3a83a025
+====================================================================================================
+Function: swapExactTokensForTokensSupportingFeeOnTransferTokens
+Arguments:
+  amountIn: 4591819999999999606784
+  amountOutMin: 187860815
+Path: ["0x76e222b07c53d28b89b0bac18602810fc22b49a8","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xdac17f958d2ee523a2206206994597c13d831ec7"]
+Tokens: ["JOE","WETH","USDT"]
+To: 0xACBCB2724CFafb839C752d71997A8a7a16989b2e
+Pool Addresses: ["0x704aD8d95C12D7FEA531738faA94402725acB035","0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xACBCB2724CFafb839C752d71997A8a7a16989b2e
+Transaction hash: 0x2ef1ebd8f1000bb6eeaec0d5daef48144cebe82cfda8a2f024896d4bc405ab9f
+====================================================================================================
+Function: swapExactTokensForTokens
+Arguments:
+  amountIn: 700000000
+  amountOutMin: 44456157839975064307
+Path: ["0xdac17f958d2ee523a2206206994597c13d831ec7","0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x4d4574f50dd8b9dbe623cf329dcc78d76935e610"]
+Tokens: ["USDT","WETH","ZEUS"]
+To: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852","0x055FB841Cce69000FBAFF2691Ad39Fa6E23826a1"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0x25b81F919184eF6df7bF9dA6F5D3D621cE9Bf9a8
+Transaction hash: 0x9087fc4ab3fba4ae772960c49b205663e69f19cb7b37157b975596181131df52
+====================================================================================================

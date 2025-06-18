@@ -2,7 +2,7 @@ const { ethers } = require("ethers");
 const IUniswapV2Factory = require("@uniswap/v2-core/build/IUniswapV2Factory.json");
 const IUniswapV2Router02 = require("@uniswap/v2-periphery/build/IUniswapV2Router02.json");
 const ERC20Abi = require("erc-20-abi");
-const { swapFunctions, funcNames, pairMap, makeKey } = require("./constants");
+const { swapFunctions, funcNames } = require("./constants");
 
 const factoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 
@@ -72,16 +72,6 @@ const decodeSwapFunction = async (tx, contracts) => {
     }
 
     logOutput.push("Tokens: " + JSON.stringify(symbols));
-
-    let addresses = [];
-    for (let i = 0; i < symbols.length - 1; i++) {
-      const addrs = pairMap.get(makeKey(symbols[i], symbols[i + 1]));
-      if (addrs) {
-        addresses = [...addresses, ...addrs];
-      }
-    }
-
-    logOutput.push("Possible LPs: " + JSON.stringify(addresses));
 
     if (decoded.to) {
       logOutput.push(`To: ${decoded.to}`);

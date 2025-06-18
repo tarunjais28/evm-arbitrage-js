@@ -46,26 +46,24 @@ const decodeSwapFunction = async (tx, contracts) => {
       const symbol = await token.symbol();
       symbols.push(symbol);
     } catch (error) {
-      console.error(`Error getting symbol for token ${path}:`, error);
+      // Not logging error here to prevent distorted output
     }
   }
 
-  console.log(`Function: ${matched.name}`);
-  console.log("Arguments:");
+  let logOutput = [];
+  logOutput.push(`Function: ${matched.name}`);
+  logOutput.push("Arguments:");
 
   const argNames = swapFunctions[matched.name] || [];
   argNames.forEach((name, idx) => {
-    console.log(`${name}: ${decoded[idx]?.toString()}`);
+    logOutput.push(`  ${name}: ${decoded[idx]?.toString()}`);
   });
 
   if (decoded.path) {
-    console.log(
-      "Path:",
-      decoded.path.map((a) => a.toLowerCase()),
-    );
+    logOutput.push("Path: " + JSON.stringify(decoded.path.map((a) => a.toLowerCase())));
   }
 
-  console.log("tokens:", symbols);
+  logOutput.push("Tokens: " + JSON.stringify(symbols));
 
   let addresses = [];
   for (let i = 0; i < symbols.length - 1; i++) {
@@ -75,10 +73,10 @@ const decodeSwapFunction = async (tx, contracts) => {
     }
   }
 
-  console.log("possibleLPs:", addresses);
+  logOutput.push("Possible LPs: " + JSON.stringify(addresses));
 
   if (decoded.to) {
-    console.log("To:", decoded.to);
+    logOutput.push(`To: ${decoded.to}`);
   }
 
   let poolAddresses = [];
@@ -88,18 +86,20 @@ const decodeSwapFunction = async (tx, contracts) => {
       poolAddresses.push(address);
     }
   }
-  console.log("poolAddresses:", poolAddresses);
+  logOutput.push("Pool Addresses: " + JSON.stringify(poolAddresses));
 
   for (const address of poolAddresses) {
     if (contracts.includes(address)) {
-      console.log(`Found: ${address}`);
+      logOutput.push(`Found Matching LP: ${address}`);
     }
   }
 
-  console.log(`to: ${tx.to}`);
-  console.log(`from: ${tx.from}`);
-  console.log(`tx: ${tx.hash}`);
-  console.log("=".repeat(100));
+  logOutput.push(`Transaction to: ${tx.to}`);
+  logOutput.push(`Transaction from: ${tx.from}`);
+  logOutput.push(`Transaction hash: ${tx.hash}`);
+  logOutput.push("=".repeat(100));
+
+  console.log(logOutput.join("\n"));
 };
 
 module.exports = {

@@ -28,24 +28,6 @@ const funcNames = [
   "swapTokensForExactTokens",
 ];
 
-const tokenAddressToSymbol = new Map([
-  ["0xdbdb4d16eda451d0503b854cf79d55697f90c8df".toLowerCase(), "ALCX"],
-  ["0x6b175474e89094c44da98b954eedeac495271d0f".toLowerCase(), "DAI"],
-  ["0x419c4db4b9e25d6db2ad9691ccb832c8d9fda05e".toLowerCase(), "DRGN"],
-  ["0x9ab7bb7fdc60f4357ecfef43986818a2a3569c62".toLowerCase(), "GOG"],
-  ["0x767fe9edc9e0df98e07454847909b5e959d7ca0e".toLowerCase(), "ILV"],
-  ["0x514910771af9ca656af840dff83e8264ecf986ca".toLowerCase(), "LINK"],
-  ["0x3131ae663eef833e77dfa1d618536b07e191b31d".toLowerCase(), "NFD"],
-  ["0x45804880de22913dafe09f4980848ece6ecbaf78".toLowerCase(), "PAXG"],
-  ["0xee7527841a932d2912224e20a405e1a1ff747084".toLowerCase(), "SHX"],
-  ["0x6b3595068778dd592e39a122f4f5a5cf09c90fe2".toLowerCase(), "SUSHI"],
-  ["0x2e9d63788249371f1dfc918a52f8d799f4a38c94".toLowerCase(), "TOKE"],
-  ["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48".toLowerCase(), "USDC"],
-  ["0xdac17f958d2ee523a2206206994597c13d831ec7".toLowerCase(), "USDT"],
-  ["0x2260fac5e5542a773aa44fbcfedf7c193bc2c599".toLowerCase(), "WBTC"],
-  ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".toLowerCase(), "WETH"],
-]);
-
 const pairMap = new Map();
 
 function makeKey(tokenA, tokenB) {
@@ -105,7 +87,6 @@ pairMap.set(makeKey("PAXG", "WETH"), [
 module.exports = {
   swapFunctions,
   funcNames,
-  tokenAddressToSymbol,
   pairMap,
   makeKey,
 };

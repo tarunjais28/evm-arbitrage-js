@@ -66,7 +66,9 @@ const decodeSwapFunction = async (tx, contracts) => {
     });
 
     if (decoded.path) {
-      logOutput.push("Path: " + JSON.stringify(decoded.path.map((a) => a.toLowerCase())));
+      logOutput.push(
+        "Path: " + JSON.stringify(decoded.path.map((a) => a.toLowerCase())),
+      );
     }
 
     logOutput.push("Tokens: " + JSON.stringify(symbols));
@@ -94,10 +96,16 @@ const decodeSwapFunction = async (tx, contracts) => {
     }
     logOutput.push("Pool Addresses: " + JSON.stringify(poolAddresses));
 
+    let contains = false;
     for (const address of poolAddresses) {
-      if (contracts.includes(address)) {
+      if (contracts.includes(address.toLowerCase())) {
         logOutput.push(`Found Matching LP: ${address}`);
+        contains = true;
       }
+    }
+
+    if (!contains) {
+      return;
     }
 
     logOutput.push(`Transaction to: ${tx.to}`);

@@ -1,0 +1,54 @@
+Function: swapExactETHForTokensSupportingFeeOnTransferTokens
+Arguments:
+amountOutMin: 125351
+Path: [
+  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+]
+tokens: [ 'WETH', 'WBTC' ]
+contractAddresses: [
+  '0xceff51756c56ceffca006cd410b03ffc46dd3a58',
+  '0xbb2b8038a1640196fbe3e38816f3e67cba72d940'
+]
+To: 0x522E5B627cCb103FB31e125F9A42FE86300DD5D0
+Deadline: 1750238813
+to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+from: 0x522E5B627cCb103FB31e125F9A42FE86300DD5D0
+tx: 0x5f2198ea9be5a97bb884f51f95046a135ead3e62adce54ef72232fb5ac070db9
+====================================================================================================
+Function: swapExactTokensForETHSupportingFeeOnTransferTokens
+Arguments:
+amountIn: 126618
+amountOutMin: 51829457654687720
+Path: [
+  '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
+]
+tokens: [ 'WBTC', 'WETH' ]
+contractAddresses: [
+  '0xceff51756c56ceffca006cd410b03ffc46dd3a58',
+  '0xbb2b8038a1640196fbe3e38816f3e67cba72d940'
+]
+To: 0x522E5B627cCb103FB31e125F9A42FE86300DD5D0
+Deadline: 1750238831
+to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+from: 0x522E5B627cCb103FB31e125F9A42FE86300DD5D0
+tx: 0x2d5e8e83f64402c7b867ec0a1fd64e866d1d53fe8b7a99a678b6722166fd0c83
+====================================================================================================
+Function: swapTokensForExactTokens
+Arguments:
+amountOut: 10000000000000
+amountInMax: 769920454
+Path: [
+  '0xdac17f958d2ee523a2206206994597c13d831ec7',
+  '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  '0x95ed629b028cf6aadd1408bb988c6d1daabe4767'
+]
+tokens: [ 'USDT', 'WETH' ]
+contractAddresses: []
+To: 0x1b6b06E240f6d6bDC946a809520A5B79D2Ac862A
+Deadline: 1750237981
+to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+from: 0x4Ca9ee5004390c0E58AbD3B3ed83826293935201
+tx: 0x232f9dfeb7322e0d1e28984549296b518bd3a9c487b3bda371900f59b38c424d
+====================================================================================================

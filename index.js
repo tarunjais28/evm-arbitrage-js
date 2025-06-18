@@ -177,11 +177,12 @@ const decodeSwapFunction = (txInput) => {
     }
   }
 
-  console.log("contractAddresses:", addresses);
+  console.log("possibleLPs:", addresses);
 
   if (decoded.to) {
     console.log("To:", decoded.to);
   }
+  
   if (decoded.deadline) {
     console.log("Deadline:", decoded.deadline.toString());
   }

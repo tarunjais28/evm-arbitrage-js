@@ -1,5 +1,9 @@
 const fs = require("fs");
 const { ethers } = require("ethers");
+const { keccak256, getAddress } = require("ethers");
+const IUniswapV2Factory = require("@uniswap/v2-core/build/IUniswapV2Factory.json");
+
+const factoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 
 require("dotenv").config();
 
@@ -7,6 +11,12 @@ const url = process.env.WEBSOCKET_ENDPOINT;
 
 // Connect to the WebSocket provider
 const provider = new ethers.WebSocketProvider(url);
+
+const factoryContract = new ethers.Contract(
+  factoryAddress,
+  IUniswapV2Factory.abi,
+  provider,
+);
 
 // === Load ABI ===
 const abi = require("./uniswap_routerv2_abi.json");
@@ -119,9 +129,9 @@ pairMap.set(makeKey("PAXG", "WETH"), [
   "0x9C4Fe5FFD9A9fC5678cFBd93Aa2D4FD684b67C4C".toLowerCase(),
 ]);
 
-const decodeSwapFunction = (txInput) => {
+const decodeSwapFunction = async (tx, contracts) => {
   // === Decode the function selector ===
-  const selector = txInput.slice(0, 10);
+  const selector = tx.data.slice(0, 10);
   let matched = null;
 
   for (const name of funcNames) {
@@ -137,7 +147,7 @@ const decodeSwapFunction = (txInput) => {
   }
 
   // === Decode calldata ===
-  const decoded = iface.decodeFunctionData(matched.name, txInput);
+  const decoded = iface.decodeFunctionData(matched.name, tx.data);
 
   let symbols = [];
   for (const path of decoded.path) {
@@ -145,10 +155,6 @@ const decodeSwapFunction = (txInput) => {
     if (symbol) {
       symbols.push(symbol);
     }
-  }
-
-  if (symbols.length < 2) {
-    return false;
   }
 
   // === Display Output ===
@@ -182,31 +188,56 @@ const decodeSwapFunction = (txInput) => {
   if (decoded.to) {
     console.log("To:", decoded.to);
   }
-  
+
   if (decoded.deadline) {
     console.log("Deadline:", decoded.deadline.toString());
   }
 
-  return true;
+  let poolAddresses = [];
+  for (let i = 0; i < decoded.path.length - 1; i++) {
+    let address = await getPairAddress(decoded.path[i], decoded.path[i + 1]);
+    if (address) {
+      poolAddresses.push(address);
+    }
+  }
+  console.log("poolAddresses:", poolAddresses);
+
+  for (const address of poolAddresses) {
+    if (contracts.includes(address)) {
+      console.log(`Found: ${address}`);
+    }
+  }
+
+  console.log(`to: ${tx.to}`);
+  console.log(`from: ${tx.from}`);
+  console.log(`tx: ${tx.hash}`);
+  console.log("=".repeat(100));
 };
+
+async function getPairAddress(tokenA, tokenB) {
+  let pair = await factoryContract.getPair(tokenA, tokenB);
+  return pair;
+}
 
 // Listen for pending transactions
 const init = () => {
-  // let txData = "0x18cbafe500000000000000000000000000000000000000000000000000000000077b7b1a00000000000000000000000000000000000000000000000000b1872a3de434e800000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000ba100a303e8ecb30c93e99034cf47180f9126c7100000000000000000000000000000000000000000000000000000000684dc7020000000000000000000000000000000000000000000000000000000000000002000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-  // let addresses = decodeSwapFunction(txData);
+  // Read contract addresses from contract.txt in the array
+  const contracts = fs
+    .readFileSync("resources/contracts.txt", "utf-8")
+    .split("\n")
+    .map((addr) => addr.trim().toLowerCase())
+    .filter((addr) => addr.length > 0);
+
+  // let txData =
+  //   "0x18cbafe500000000000000000000000000000000000000000000000000000000077b7b1a00000000000000000000000000000000000000000000000000b1872a3de434e800000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000ba100a303e8ecb30c93e99034cf47180f9126c7100000000000000000000000000000000000000000000000000000000684dc7020000000000000000000000000000000000000000000000000000000000000002000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+  // let addresses = decodeSwapFunction(txData, contracts);
 
   provider.on("pending", async (txHash) => {
     try {
       const tx = await provider.getTransaction(txHash);
       if (tx) {
         if (tx.data.length > 4) {
-          let addresses = decodeSwapFunction(tx.data);
-          if (addresses) {
-            console.log(`to: ${tx.to}`);
-            console.log(`from: ${tx.from}`);
-            console.log(`tx: ${tx.hash}`);
-            console.log("=".repeat(100));
-          }
+          decodeSwapFunction(tx, contracts);
         }
       }
     } catch (err) {

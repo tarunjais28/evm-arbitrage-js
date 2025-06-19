@@ -339,6 +339,6 @@ class SwapData extends DerivedData {
 }
 
 module.exports = {
-    DerivedData,
-    SwapData
-}
+  DerivedData,
+  SwapData,
+};

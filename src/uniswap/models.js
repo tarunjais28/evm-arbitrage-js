@@ -1,8 +1,12 @@
 const { ethers } = require("ethers");
 const chalk = require("chalk");
 const { sortTokens } = require("./utils");
-const { getPairAddress, getReserves, routerContract } = require("./contracts");
-const ERC20Abi = require("erc-20-abi");
+const {
+  getPairAddress,
+  getReserves,
+  routerContract,
+  balanceOf,
+} = require("./contracts");
 
 class DerivedData {
   constructor(
@@ -51,7 +55,6 @@ class DerivedData {
     logOutput.push(`Transaction from: ${this.txFrom}`);
     logOutput.push(`Transaction hash: ${this.txHash}`);
     logOutput.push(`Value: ${ethers.formatEther(this.value)} ETH`);
-    logOutput.push("=".repeat(100));
 
     console.log(chalk.green(logOutput.join("\n")));
   }
@@ -80,10 +83,12 @@ class SwapData extends DerivedData {
       txHash,
       value,
     );
+    this.amount0In = 0;
+    this.amount1In = 0;
     this.amount0Out = 0;
     this.amount1Out = 0;
-    this.reserve0 = 0;
-    this.reserve1 = 0;
+    this.reserve0 = [];
+    this.reserve1 = [];
   }
 
   async _swap(amounts) {
@@ -92,12 +97,24 @@ class SwapData extends DerivedData {
       const [token0] = sortTokens(input, this.path[i + 1]);
       const amountOut = amounts[i + 1];
       if (input.toLowerCase() === token0.toLowerCase()) {
+        this.amount0In = this.value;
+        this.amount1In = 0;
         this.amount0Out = 0;
         this.amount1Out = amountOut;
       } else {
+        this.amount0In = 0;
+        this.amount1In = this.value;
         this.amount0Out = amountOut;
         this.amount1Out = 0;
       }
+    }
+  }
+
+  async getReserveBalances() {
+    for (const pool of this.poolAddresses) {
+      let [reserve0, reserve1] = await getReserves(pool);
+      this.reserve0.push(reserve0);
+      this.reserve1.push(reserve1);
     }
   }
 
@@ -108,26 +125,32 @@ class SwapData extends DerivedData {
       const [token0] = sortTokens(input, output);
       let address = await getPairAddress(input, output);
       let [reserve0, reserve1] = await getReserves(address);
+      console.log(input, token0, input == token0);
       let [reserveInput, reserveOutput] =
         input == token0 ? [reserve0, reserve1] : [reserve1, reserve0];
-      const token = new ethers.Contract(input, ERC20Abi, provider);
-      let amountInput = (await token.balanceOf(address)) - reserveInput;
-      let amountOutput;
+      const balance = await balanceOf(input, address);
+      let amountInput = balance - reserveInput;
+      let amountOut;
+      console.log(balance, amountInput, reserveInput, reserveOutput);
       try {
-        amountOutput = await routerContract.getAmountOut(
+        amountOut = await routerContract.getAmountOut(
           amountInput,
           reserveInput,
           reserveOutput,
         );
         if (input.toLowerCase() === token0.toLowerCase()) {
+          this.amount0In = this.value;
+          this.amount1In = 0;
           this.amount0Out = 0;
-          this.amount1Out = amountOutput;
+          this.amount1Out = amountOut;
         } else {
-          this.amount0Out = amountOutput;
+          this.amount0In = 0;
+          this.amount1In = this.value;
+          this.amount0Out = amountOut;
           this.amount1Out = 0;
         }
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts out: ${e}`);
         return;
       }
     }
@@ -153,14 +176,7 @@ class SwapData extends DerivedData {
         return;
       }
 
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
-      console.log(chalk.yellow("Arbitrage opportunity found!"));
-      console.log(
-        `Required ETH: ${ethers.formatEther(amounts[0])}, Sent ETH: ${ethers.formatEther(this.value)}`,
-      );
+      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (this.functionName === "swapExactETHForTokens") {
       if (this.tokens[0] !== "WETH") {
@@ -181,14 +197,7 @@ class SwapData extends DerivedData {
         return;
       }
 
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
-      console.log(chalk.yellow("Arbitrage opportunity found!"));
-      console.log(
-        `Required ETH: ${ethers.formatEther(amounts[0])}, Sent ETH: ${ethers.formatEther(this.value)}`,
-      );
+      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
       this.functionName === "swapExactETHForTokensSupportingFeeOnTransferTokens"
@@ -197,14 +206,7 @@ class SwapData extends DerivedData {
         return;
       }
 
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
-      console.log(chalk.yellow("Arbitrage opportunity found!"));
-      console.log(
-        `Required ETH: ${ethers.formatEther(amounts[0])}, Sent ETH: ${ethers.formatEther(this.value)}`,
-      );
+      await this.getReserveBalances();
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapExactTokensForETH") {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
@@ -226,14 +228,7 @@ class SwapData extends DerivedData {
         return;
       }
 
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
-      console.log(chalk.yellow("Arbitrage opportunity found!"));
-      console.log(
-        `Required ETH: ${ethers.formatEther(amounts[0])}, Sent ETH: ${ethers.formatEther(this.value)}`,
-      );
+      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
       this.functionName === "swapExactTokensForETHSupportingFeeOnTransferTokens"
@@ -242,11 +237,7 @@ class SwapData extends DerivedData {
         return;
       }
 
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
-      console.log(chalk.yellow("Arbitrage opportunity found!"));
+      await this.getReserveBalances();
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapExactTokensForTokens") {
       let amounts;
@@ -264,23 +255,13 @@ class SwapData extends DerivedData {
         return;
       }
 
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
-      console.log(chalk.yellow("Arbitrage opportunity found!"));
-      console.log(
-        `Required ETH: ${ethers.formatEther(amounts[0])}, Sent ETH: ${ethers.formatEther(this.value)}`,
-      );
+      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
       this.functionName ===
       "swapExactTokensForTokensSupportingFeeOnTransferTokens"
     ) {
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
+      await this.getReserveBalances();
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapTokensForExactETH") {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
@@ -301,10 +282,7 @@ class SwapData extends DerivedData {
       if (amounts[0] > this.args.amountInMax) {
         return;
       }
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
+      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (this.functionName === "swapTokensForExactTokens") {
       let amounts;
@@ -321,20 +299,25 @@ class SwapData extends DerivedData {
       if (amounts[0] > this.args.amountInMax) {
         return;
       }
-      [this.reserve0, this.reserve1] = await getReserves(
-        this.path[0],
-        this.path[1],
-      );
+      await this.getReserveBalances();
       await this._swap(amounts);
     }
   }
 
   display() {
     super.display();
-    console.log("amount 0 out: ", this.amount0Out.toString());
-    console.log("amount 1 out: ", this.amount1Out.toString());
-    console.log("reserve 0: ", this.reserve0.toString());
-    console.log("reserve 1: ", this.reserve1.toString());
+
+    let logOutput = [];
+
+    logOutput.push(`amount0In: ${this.amount0In.toString()}`);
+    logOutput.push(`amount1In: ${this.amount1In.toString()}`);
+    logOutput.push(`amount0Out: ${this.amount0Out.toString()}`);
+    logOutput.push(`amount1Out: ${this.amount1Out.toString()}`);
+    logOutput.push(`reserve0: ${this.reserve0.toString()}`);
+    logOutput.push(`reserve1: ${this.reserve1.toString()}`);
+
+    logOutput.push("=".repeat(100));
+    console.log(chalk.green(logOutput.join("\n")));
   }
 }
 

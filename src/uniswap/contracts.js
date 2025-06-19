@@ -2,6 +2,8 @@ const { ethers } = require("ethers");
 const IUniswapV2Factory = require("@uniswap/v2-core/build/IUniswapV2Factory.json");
 const IUniswapV2Router02 = require("@uniswap/v2-periphery/build/IUniswapV2Router02.json");
 const { factoryAddress, routerAddress } = require("./constants");
+const UniswapPair = require("eth-abis/abis/UniswapPair.json");
+const ERC20Abi = require("erc-20-abi");
 
 const provider = new ethers.WebSocketProvider(process.env.WEBSOCKET_ENDPOINT);
 
@@ -28,13 +30,17 @@ async function getPairAddress(tokenA, tokenB) {
   }
 }
 
-async function getReserves(tokenA, tokenB) {
-  try {
-    const reserves = await routerContract.getReserves(tokenA, tokenB);
-    return reserves;
-  } catch (e) {
-    return null;
-  }
+async function getReserves(pairAddress) {
+  const pairContract = new ethers.Contract(pairAddress, UniswapPair, provider);
+
+  let [reserve0, reserve1, _] = await pairContract.getReserves();
+  return [reserve0, reserve1];
+}
+
+async function balanceOf(contractAddress, address) {
+  const contract = new ethers.Contract(contractAddress, ERC20Abi, provider);
+  let balance = await contract.balanceOf(address);
+  return balance;
 }
 
 module.exports = {
@@ -44,4 +50,5 @@ module.exports = {
   iface,
   getPairAddress,
   getReserves,
+  balanceOf,
 };

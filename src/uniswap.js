@@ -56,54 +56,66 @@ const decodeSwapFunction = async (tx, contracts) => {
       }
     }
 
-    let logOutput = [];
-    logOutput.push(`Function: ${matched.name}`);
-    logOutput.push("Arguments:");
+    const derivedFields = {
+      functionName: matched.name,
+      args: {},
+      path: decoded.path ? decoded.path.map((a) => a.toLowerCase()) : [],
+      tokens: symbols,
+      recipient: decoded.to || null,
+      poolAddresses: [],
+      matchingLps: [],
+      txTo: tx.to,
+      txFrom: tx.from,
+      txHash: tx.hash,
+    };
 
     const argNames = swapFunctions[matched.name] || [];
     argNames.forEach((name, idx) => {
-      logOutput.push(`  ${name}: ${decoded[idx]?.toString()}`);
+      derivedFields.args[name] = decoded[idx]?.toString();
     });
 
-    if (decoded.path) {
-      logOutput.push(
-        "Path: " + JSON.stringify(decoded.path.map((a) => a.toLowerCase())),
-      );
-    }
-
-    logOutput.push("Tokens: " + JSON.stringify(symbols));
-
-    if (decoded.to) {
-      logOutput.push(`To: ${decoded.to}`);
-    }
-
-    let poolAddresses = [];
     for (let i = 0; i < decoded.path.length - 1; i++) {
       let address = await getPairAddress(decoded.path[i], decoded.path[i + 1]);
       if (address) {
-        poolAddresses.push(address);
+        derivedFields.poolAddresses.push(address);
       }
     }
-    logOutput.push("Pool Addresses: " + JSON.stringify(poolAddresses));
 
-    let contains = false;
-    for (const address of poolAddresses) {
+    for (const address of derivedFields.poolAddresses) {
       if (contracts.includes(address.toLowerCase())) {
-        logOutput.push(`Found Matching LP: ${address}`);
-        contains = true;
+        derivedFields.matchingLps.push(address);
       }
     }
 
-    if (!contains) {
+    if (derivedFields.matchingLps.length === 0) {
       return;
     }
 
-    logOutput.push(`Transaction to: ${tx.to}`);
-    logOutput.push(`Transaction from: ${tx.from}`);
-    logOutput.push(`Transaction hash: ${tx.hash}`);
+    let logOutput = [];
+    logOutput.push(`Function: ${derivedFields.functionName}`);
+    logOutput.push("Arguments:");
+    for (const [name, value] of Object.entries(derivedFields.args)) {
+      logOutput.push(`  ${name}: ${value}`);
+    }
+    if (derivedFields.path.length > 0) {
+      logOutput.push("Path: " + JSON.stringify(derivedFields.path));
+    }
+    logOutput.push("Tokens: " + JSON.stringify(derivedFields.tokens));
+    if (derivedFields.recipient) {
+      logOutput.push(`To: ${derivedFields.recipient}`);
+    }
+    logOutput.push(
+      "Pool Addresses: " + JSON.stringify(derivedFields.poolAddresses),
+    );
+    for (const address of derivedFields.matchingLps) {
+      logOutput.push(`Found Matching LP: ${address}`);
+    }
+    logOutput.push(`Transaction to: ${derivedFields.txTo}`);
+    logOutput.push(`Transaction from: ${derivedFields.txFrom}`);
+    logOutput.push(`Transaction hash: ${derivedFields.txHash}`);
     logOutput.push("=".repeat(100));
 
-    console.log(logOutput.join("\n"));
+    console.log(chalk.green(logOutput.join("\n")));
   } catch (error) {
     // Suppress errors during decoding to prevent crashes.
     // A single failed transaction should not stop the entire process.

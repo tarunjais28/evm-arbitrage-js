@@ -122,15 +122,19 @@ class SwapData extends DerivedData {
     for (let i = 0; i < this.path.length - 1; i++) {
       const input = this.path[i];
       const output = this.path[i + 1];
+
       const [token0] = sortTokens(input, output);
-      let address = await getPairAddress(input, output);
-      let [reserve0, reserve1] = await getReserves(address);
-      console.log(input, token0, input == token0);
+
+      let pair = await getPairAddress(input, output);
+      let [reserve0, reserve1] = await getReserves(pair);
+      
       let [reserveInput, reserveOutput] =
         input == token0 ? [reserve0, reserve1] : [reserve1, reserve0];
-      const balance = await balanceOf(input, address);
+
+      const balance = await balanceOf(input, pair);
       let amountInput = balance - reserveInput;
       let amountOut;
+
       console.log(balance, amountInput, reserveInput, reserveOutput);
       try {
         amountOut = await routerContract.getAmountOut(
@@ -138,6 +142,7 @@ class SwapData extends DerivedData {
           reserveInput,
           reserveOutput,
         );
+
         if (input.toLowerCase() === token0.toLowerCase()) {
           this.amount0In = this.value;
           this.amount1In = 0;
@@ -150,7 +155,7 @@ class SwapData extends DerivedData {
           this.amount1Out = 0;
         }
       } catch (e) {
-        console.log(`Could not get amounts out: ${e}`);
+        console.log(`INSUFFICIENT_INPUT_AMOUNT`);
         return;
       }
     }
@@ -168,7 +173,7 @@ class SwapData extends DerivedData {
           this.path,
         );
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts in: ${e}`);
         return;
       }
 
@@ -184,12 +189,12 @@ class SwapData extends DerivedData {
       }
       let amounts;
       try {
-        amounts = await routerContract.getAmountsIn(
-          this.args.amountOut,
+        amounts = await routerContract.getAmountsOut(
+          this.value,
           this.path,
         );
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts in: ${e}`);
         return;
       }
 
@@ -220,7 +225,7 @@ class SwapData extends DerivedData {
           this.path,
         );
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts in: ${e}`);
         return;
       }
 
@@ -242,12 +247,12 @@ class SwapData extends DerivedData {
     } else if (this.functionName === "swapExactTokensForTokens") {
       let amounts;
       try {
-        amounts = await routerContract.getAmountsIn(
-          this.args.amountOut,
+        amounts = await routerContract.getAmountsOut(
+          this.args.amountIn,
           this.path,
         );
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts out: ${e}`);
         return;
       }
 
@@ -275,7 +280,7 @@ class SwapData extends DerivedData {
           this.path,
         );
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts in: ${e}`);
         return;
       }
 
@@ -292,7 +297,7 @@ class SwapData extends DerivedData {
           this.path,
         );
       } catch (e) {
-        // console.log("Could not get amounts in");
+        console.log(`Could not get amounts in: ${e}`);
         return;
       }
 

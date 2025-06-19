@@ -3,6 +3,50 @@ const IUniswapV2Factory = require("@uniswap/v2-core/build/IUniswapV2Factory.json
 const IUniswapV2Router02 = require("@uniswap/v2-periphery/build/IUniswapV2Router02.json");
 const ERC20Abi = require("erc-20-abi");
 const { swapFunctions, funcNames } = require("./constants");
+const chalk = require("chalk");
+
+class DerivedData {
+  constructor(functionName, args, path, tokens, recipient, txTo, txFrom, txHash) {
+    this.functionName = functionName;
+    this.args = args;
+    this.path = path;
+    this.tokens = tokens;
+    this.recipient = recipient;
+    this.txTo = txTo;
+    this.txFrom = txFrom;
+    this.txHash = txHash;
+    this.poolAddresses = [];
+    this.matchingLps = [];
+  }
+
+  display() {
+    let logOutput = [];
+    logOutput.push(`Function: ${this.functionName}`);
+    logOutput.push("Arguments:");
+    for (const [name, value] of Object.entries(this.args)) {
+      logOutput.push(`  ${name}: ${value}`);
+    }
+    if (this.path.length > 0) {
+      logOutput.push("Path: " + JSON.stringify(this.path));
+    }
+    logOutput.push("Tokens: " + JSON.stringify(this.tokens));
+    if (this.recipient) {
+      logOutput.push(`To: ${this.recipient}`);
+    }
+    logOutput.push(
+      "Pool Addresses: " + JSON.stringify(this.poolAddresses),
+    );
+    for (const address of this.matchingLps) {
+      logOutput.push(`Found Matching LP: ${address}`);
+    }
+    logOutput.push(`Transaction to: ${this.txTo}`);
+    logOutput.push(`Transaction from: ${this.txFrom}`);
+    logOutput.push(`Transaction hash: ${this.txHash}`);
+    logOutput.push("=".repeat(100));
+
+    console.log(chalk.green(logOutput.join("\n")));
+  }
+}
 
 const factoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 
@@ -56,66 +100,40 @@ const decodeSwapFunction = async (tx, contracts) => {
       }
     }
 
-    const derivedFields = {
-      functionName: matched.name,
-      args: {},
-      path: decoded.path ? decoded.path.map((a) => a.toLowerCase()) : [],
-      tokens: symbols,
-      recipient: decoded.to || null,
-      poolAddresses: [],
-      matchingLps: [],
-      txTo: tx.to,
-      txFrom: tx.from,
-      txHash: tx.hash,
-    };
+    const derivedData = new DerivedData(
+      matched.name,
+      {},
+      decoded.path ? decoded.path.map((a) => a.toLowerCase()) : [],
+      symbols,
+      decoded.to || null,
+      tx.to,
+      tx.from,
+      tx.hash,
+    );
 
-    const argNames = swapFunctions[matched.name] || [];
+    const argNames = swapFunctions[derivedData.functionName] || [];
     argNames.forEach((name, idx) => {
-      derivedFields.args[name] = decoded[idx]?.toString();
+      derivedData.args[name] = decoded[idx]?.toString();
     });
 
-    for (let i = 0; i < decoded.path.length - 1; i++) {
-      let address = await getPairAddress(decoded.path[i], decoded.path[i + 1]);
+    for (let i = 0; i < derivedData.path.length - 1; i++) {
+      let address = await getPairAddress(derivedData.path[i], derivedData.path[i + 1]);
       if (address) {
-        derivedFields.poolAddresses.push(address);
+        derivedData.poolAddresses.push(address);
       }
     }
 
-    for (const address of derivedFields.poolAddresses) {
+    for (const address of derivedData.poolAddresses) {
       if (contracts.includes(address.toLowerCase())) {
-        derivedFields.matchingLps.push(address);
+        derivedData.matchingLps.push(address);
       }
     }
 
-    if (derivedFields.matchingLps.length === 0) {
+    if (derivedData.matchingLps.length === 0) {
       return;
     }
 
-    let logOutput = [];
-    logOutput.push(`Function: ${derivedFields.functionName}`);
-    logOutput.push("Arguments:");
-    for (const [name, value] of Object.entries(derivedFields.args)) {
-      logOutput.push(`  ${name}: ${value}`);
-    }
-    if (derivedFields.path.length > 0) {
-      logOutput.push("Path: " + JSON.stringify(derivedFields.path));
-    }
-    logOutput.push("Tokens: " + JSON.stringify(derivedFields.tokens));
-    if (derivedFields.recipient) {
-      logOutput.push(`To: ${derivedFields.recipient}`);
-    }
-    logOutput.push(
-      "Pool Addresses: " + JSON.stringify(derivedFields.poolAddresses),
-    );
-    for (const address of derivedFields.matchingLps) {
-      logOutput.push(`Found Matching LP: ${address}`);
-    }
-    logOutput.push(`Transaction to: ${derivedFields.txTo}`);
-    logOutput.push(`Transaction from: ${derivedFields.txFrom}`);
-    logOutput.push(`Transaction hash: ${derivedFields.txHash}`);
-    logOutput.push("=".repeat(100));
-
-    console.log(chalk.green(logOutput.join("\n")));
+    derivedData.display();
   } catch (error) {
     // Suppress errors during decoding to prevent crashes.
     // A single failed transaction should not stop the entire process.

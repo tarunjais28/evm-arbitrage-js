@@ -19,7 +19,13 @@ const init = () => {
   provider.on("pending", async (txHash) => {
     try {
       const tx = await provider.getTransaction(txHash);
-      if (tx && tx.data.length > 4 && !tx.blockHash && !tx.blockNumber) {
+      if (
+        tx &&
+        tx.data.length > 4 &&
+        !tx.blockHash &&
+        !tx.blockNumber &&
+        tx.to == "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+      ) {
         decodeSwapFunction(tx, contracts);
       }
     } catch (err) {

@@ -17,8 +17,8 @@ amount0In: 1475000000000000
 amount1In: 0
 amount0Out: 0
 amount1Out: 3748053
-reserve0: 6897937612287839303266
-reserve1: 17580771555580
+reserve0: 6897937612287839303266,6897937612287839303266
+reserve1: 17580771555580,17580771555580
 ====================================================================================================
 Function: swapExactETHForTokens
 Arguments:
@@ -39,8 +39,8 @@ amount0In: 0
 amount1In: 913000000000000
 amount0Out: 2321386898748926477
 amount1Out: 0
-reserve0: 5628577301708676951529381
-reserve1: 2207073837163418898080
+reserve0: 5628577301708676951529381,5628577301708676951529381, spot price = (reserve1 / reserve0) with decimals
+reserve1: 2207073837163418898080,2207073837163418898080
 ====================================================================================================
 Function: swapExactETHForTokens
 Arguments:
@@ -61,8 +61,8 @@ amount0In: 374789333682194
 amount1In: 0
 amount0Out: 0
 amount1Out: 952360
-reserve0: 6897933767704352781279
-reserve1: 17580781406349
+reserve0: 6897933767704352781279,6897933767704352781279
+reserve1: 17580781406349,17580781406349
 ====================================================================================================
 Function: swapExactTokensForETH
 Arguments:
@@ -86,4 +86,114 @@ amount0Out:
 amount1Out: 
 reserve0: 
 reserve1: 
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 3087365
+  path: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0xdAC17F958D2ee523a2206206994597C13D831ec7
+  to: 0xC48D8c4F8685102656dDc005848F5BEBBDB3c899
+  deadline: 1750423138
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xdac17f958d2ee523a2206206994597c13d831ec7"]
+Tokens: ["WETH","USDT"]
+To: 0xC48D8c4F8685102656dDc005848F5BEBBDB3c899
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xC48D8c4F8685102656dDc005848F5BEBBDB3c899
+Transaction hash: 0xbea74507df2933827c21d13e5d723459737a03bae35073d141e4b5e206010b87
+Value: 0.001279 ETH
+amount0In: 1279000000000000
+amount1In: 0
+amount0Out: 0
+amount1Out: 3249858
+reserve0: 6898096037750757431583,6898096037750757431583
+reserve1: 17580370634948,17580370634948
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 2812250
+  path: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0xdAC17F958D2ee523a2206206994597C13D831ec7
+  to: 0xe05789151C20A763773f02077bE45961d9746e4A
+  deadline: 1750423173
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xdac17f958d2ee523a2206206994597c13d831ec7"]
+Tokens: ["WETH","USDT"]
+To: 0xe05789151C20A763773f02077bE45961d9746e4A
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xe05789151C20A763773f02077bE45961d9746e4A
+Transaction hash: 0x14b9b3786a94cfd88f0d32bd84b5fd0dc14e1b59050ed69c12bafafb184d29f2
+Value: 0.001165 ETH
+amount0In: 1165000000000000
+amount1In: 0
+amount0Out: 0
+amount1Out: 2960264
+reserve0: 6898011525582864466214,6898011525582864466214
+reserve1: 17580586691567,17580586691567
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 2812250
+  path: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0xdAC17F958D2ee523a2206206994597C13D831ec7
+  to: 0xe05789151C20A763773f02077bE45961d9746e4A
+  deadline: 1750423173
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0xdac17f958d2ee523a2206206994597c13d831ec7"]
+Tokens: ["WETH","USDT"]
+To: 0xe05789151C20A763773f02077bE45961d9746e4A
+Pool Addresses: ["0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"]
+Found Matching LP: 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xe05789151C20A763773f02077bE45961d9746e4A
+Transaction hash: 0xfce87423d55ae055bce063a0f0eb9cfbec31171a76583433e0fd303e80fc08f2
+Value: 0.001165 ETH
+amount0In: 1165000000000000
+amount1In: 0
+amount0Out: 0
+amount1Out: 2960278
+reserve0: 6897994292349957088357,6897994292349957088357
+reserve1: 17580630745241,17580630745241
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4572465314986294338
+  path: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0x6B175474E89094C44Da98b954EedeAC495271d0F
+  to: 0xE2a89ffAC6c3D152d20D0923e3B835557Bc87369
+  deadline: 1750423358
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x6b175474e89094c44da98b954eedeac495271d0f"]
+Tokens: ["WETH","DAI"]
+To: 0xE2a89ffAC6c3D152d20D0923e3B835557Bc87369
+Pool Addresses: ["0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11"]
+Found Matching LP: 0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xE2a89ffAC6c3D152d20D0923e3B835557Bc87369
+Transaction hash: 0xc428cef6457e15ec928036747441c717a872962712d1bf4dfa6f756472096bb3
+Value: 0.001893 ETH
+amount0In: 0
+amount1In: 1893000000000000
+amount0Out: 4813121384196099304
+amount1Out: 0
+reserve0: 5628574980321778202602904,5628574980321778202602904
+reserve1: 2207074750163418898080,2207074750163418898080
+====================================================================================================
+Function: swapExactETHForTokens
+Arguments:
+  amountOutMin: 4572465314986294338
+  path: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0x6B175474E89094C44Da98b954EedeAC495271d0F
+  to: 0xE2a89ffAC6c3D152d20D0923e3B835557Bc87369
+  deadline: 1750423358
+Path: ["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","0x6b175474e89094c44da98b954eedeac495271d0f"]
+Tokens: ["WETH","DAI"]
+To: 0xE2a89ffAC6c3D152d20D0923e3B835557Bc87369
+Pool Addresses: ["0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11"]
+Found Matching LP: 0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11
+Transaction to: 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D
+Transaction from: 0xE2a89ffAC6c3D152d20D0923e3B835557Bc87369
+Transaction hash: 0xb2fdc4c7558cbf9db2128808dd8d99f0f0a0d68b262380c5fbd2338e74b17565
+Value: 0.001893 ETH
+amount0In: 0
+amount1In: 1893000000000000
+amount0Out: 4813121384196099304
+amount1Out: 0
+reserve0: 5628574980321778202602904,5628574980321778202602904
+reserve1: 2207074750163418898080,2207074750163418898080
 ====================================================================================================

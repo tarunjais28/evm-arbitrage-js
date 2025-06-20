@@ -83,10 +83,10 @@ class SwapData extends DerivedData {
       txHash,
       value,
     );
-    this.amount0In = 0;
-    this.amount1In = 0;
-    this.amount0Out = 0;
-    this.amount1Out = 0;
+    this.amount0In = [];
+    this.amount1In = [];
+    this.amount0Out = [];
+    this.amount1Out = [];
     this.reserve0 = [];
     this.reserve1 = [];
   }
@@ -97,15 +97,15 @@ class SwapData extends DerivedData {
       const [token0] = sortTokens(input, this.path[i + 1]);
       const amountOut = amounts[i + 1];
       if (input.toLowerCase() === token0.toLowerCase()) {
-        this.amount0In = this.value;
-        this.amount1In = 0;
-        this.amount0Out = 0;
-        this.amount1Out = amountOut;
+        this.amount0In.push(amounts[i]);
+        this.amount1In.push(0);
+        this.amount0Out.push(0);
+        this.amount1Out.push(amountOut);
       } else {
-        this.amount0In = 0;
-        this.amount1In = this.value;
-        this.amount0Out = amountOut;
-        this.amount1Out = 0;
+        this.amount0In.push(0);
+        this.amount1In.push(amounts[i]);
+        this.amount0Out.push(amountOut);
+        this.amount1Out.push(0);
       }
     }
   }
@@ -131,7 +131,7 @@ class SwapData extends DerivedData {
 
       let pair = await getPairAddress(input, output);
       let [reserve0, reserve1] = await getReserves(pair);
-      
+
       let [reserveInput, reserveOutput] =
         input == token0 ? [reserve0, reserve1] : [reserve1, reserve0];
 
@@ -151,16 +151,16 @@ class SwapData extends DerivedData {
       }
 
       if (input.toLowerCase() === token0.toLowerCase()) {
-          this.amount0In = this.value;
-          this.amount1In = 0;
-          this.amount0Out = 0;
-          this.amount1Out = amountOut;
-        } else {
-          this.amount0In = 0;
-          this.amount1In = this.value;
-          this.amount0Out = amountOut;
-          this.amount1Out = 0;
-        }
+        this.amount0In.push(amountInput);
+        this.amount1In.push(0);
+        this.amount0Out.push(0);
+        this.amount1Out.push(amountOut);
+      } else {
+        this.amount0In.push(0);
+        this.amount1In.push(amountInput);
+        this.amount0Out.push(amountOut);
+        this.amount1Out.push(0);
+      }
     }
   }
 
@@ -192,10 +192,7 @@ class SwapData extends DerivedData {
       }
       let amounts;
       try {
-        amounts = await routerContract.getAmountsOut(
-          this.value,
-          this.path,
-        );
+        amounts = await routerContract.getAmountsOut(this.value, this.path);
       } catch (e) {
         console.log(`Could not get amounts in: ${e}`);
         return;
@@ -236,6 +233,7 @@ class SwapData extends DerivedData {
         return;
       }
 
+      console.log(`amounts: ${amounts}`);
       await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
@@ -290,6 +288,7 @@ class SwapData extends DerivedData {
       if (amounts[0] > this.args.amountInMax) {
         return;
       }
+
       await this.getReserveBalances();
       await this._swap(amounts);
     } else if (this.functionName === "swapTokensForExactTokens") {
@@ -307,6 +306,7 @@ class SwapData extends DerivedData {
       if (amounts[0] > this.args.amountInMax) {
         return;
       }
+      console.log(`amounts: ${amounts}`);
       await this.getReserveBalances();
       await this._swap(amounts);
     }

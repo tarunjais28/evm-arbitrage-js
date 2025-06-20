@@ -123,6 +123,10 @@ class SwapData extends DerivedData {
       const input = this.path[i];
       const output = this.path[i + 1];
 
+      if (input == output && input == ethers.ZeroAddress) {
+        continue;
+      }
+
       const [token0] = sortTokens(input, output);
 
       let pair = await getPairAddress(input, output);
@@ -133,17 +137,20 @@ class SwapData extends DerivedData {
 
       const balance = await balanceOf(input, pair);
       let amountInput = balance - reserveInput;
-      let amountOut;
+      let amountOut = 0;
 
-      console.log(balance, amountInput, reserveInput, reserveOutput);
       try {
         amountOut = await routerContract.getAmountOut(
           amountInput,
           reserveInput,
           reserveOutput,
         );
+      } catch (e) {
+        console.log(`INSUFFICIENT_INPUT_AMOUNT`);
+        continue;
+      }
 
-        if (input.toLowerCase() === token0.toLowerCase()) {
+      if (input.toLowerCase() === token0.toLowerCase()) {
           this.amount0In = this.value;
           this.amount1In = 0;
           this.amount0Out = 0;
@@ -154,10 +161,6 @@ class SwapData extends DerivedData {
           this.amount0Out = amountOut;
           this.amount1Out = 0;
         }
-      } catch (e) {
-        console.log(`INSUFFICIENT_INPUT_AMOUNT`);
-        return;
-      }
     }
   }
 

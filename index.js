@@ -19,7 +19,7 @@ const init = () => {
   provider.on("pending", async (txHash) => {
     try {
       const tx = await provider.getTransaction(txHash);
-      if (tx && tx.data.length > 4) {
+      if (tx && tx.data.length > 4 && !tx.blockHash && !tx.blockNumber) {
         decodeSwapFunction(tx, contracts);
       }
     } catch (err) {

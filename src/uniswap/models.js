@@ -19,6 +19,7 @@ class DerivedData {
     txFrom,
     txHash,
     value,
+    decimals,
   ) {
     this.functionName = functionName;
     this.args = args;
@@ -31,6 +32,7 @@ class DerivedData {
     this.poolAddresses = [];
     this.matchingLps = [];
     this.value = value;
+    this.decimals = decimals;
   }
 
   display() {
@@ -47,6 +49,7 @@ class DerivedData {
     if (this.recipient) {
       logOutput.push(`To: ${this.recipient}`);
     }
+    logOutput.push(`decimals: ${this.decimals.toString()}`);
     logOutput.push("Pool Addresses: " + JSON.stringify(this.poolAddresses));
     for (const address of this.matchingLps) {
       logOutput.push(`Found Matching LP: ${address}`);
@@ -71,6 +74,7 @@ class SwapData extends DerivedData {
     txFrom,
     txHash,
     value,
+    decimals,
   ) {
     super(
       functionName,
@@ -82,6 +86,7 @@ class SwapData extends DerivedData {
       txFrom,
       txHash,
       value,
+      decimals,
     );
     this.amount0In = [];
     this.amount1In = [];
@@ -89,6 +94,43 @@ class SwapData extends DerivedData {
     this.amount1Out = [];
     this.reserve0 = [];
     this.reserve1 = [];
+    this.reserve0Post = [];
+    this.reserve1Post = [];
+    this.price = [];
+    this.pricePost = [];
+    this.profit = [];
+  }
+
+  async getReserveBalances() {
+    for (const pool of this.poolAddresses) {
+      let [reserve0, reserve1] = await getReserves(pool);
+      this.reserve0.push(reserve0);
+      this.reserve1.push(reserve1);
+    }
+  }
+
+  async calcPostReserves() {
+    for (let i = 0; i < this.reserve0.length; i++) {
+      this.reserve0Post[i] =
+        this.reserve0[i] + this.amount0In[i] - this.amount0Out[i];
+      this.reserve1Post[i] =
+        this.reserve1[i] + this.amount1In[i] - this.amount1Out[i];
+
+      this.price[i] =
+        (this.reserve1[i] * Math.pow(10, this.decimals[i])) /
+        (this.reserve0[i] * Math.pow(10, this.decimals[i + 1]));
+
+      this.pricePost[i] =
+        (this.reserve1Post[i] * Math.pow(10, this.decimals[i])) /
+        (this.reserve0Post[i] * Math.pow(10, this.decimals[i + 1]));
+
+      if (this.price[i] == 0) {
+        this.profit[i] = 0;
+      } else {
+        this.profit[i] =
+          ((this.pricePost[i] - this.price[i]) * 100) / this.price[i];
+      }
+    }
   }
 
   async _swap(amounts) {
@@ -107,14 +149,6 @@ class SwapData extends DerivedData {
         this.amount0Out.push(amountOut);
         this.amount1Out.push(0);
       }
-    }
-  }
-
-  async getReserveBalances() {
-    for (const pool of this.poolAddresses) {
-      let [reserve0, reserve1] = await getReserves(pool);
-      this.reserve0.push(reserve0);
-      this.reserve1.push(reserve1);
     }
   }
 
@@ -184,7 +218,6 @@ class SwapData extends DerivedData {
         return;
       }
 
-      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (this.functionName === "swapExactETHForTokens") {
       if (this.tokens[0] !== "WETH") {
@@ -202,7 +235,6 @@ class SwapData extends DerivedData {
         return;
       }
 
-      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
       this.functionName === "swapExactETHForTokensSupportingFeeOnTransferTokens"
@@ -211,7 +243,6 @@ class SwapData extends DerivedData {
         return;
       }
 
-      await this.getReserveBalances();
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapExactTokensForETH") {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
@@ -233,8 +264,6 @@ class SwapData extends DerivedData {
         return;
       }
 
-      console.log(`amounts: ${amounts}`);
-      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
       this.functionName === "swapExactTokensForETHSupportingFeeOnTransferTokens"
@@ -243,7 +272,6 @@ class SwapData extends DerivedData {
         return;
       }
 
-      await this.getReserveBalances();
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapExactTokensForTokens") {
       let amounts;
@@ -261,13 +289,11 @@ class SwapData extends DerivedData {
         return;
       }
 
-      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (
       this.functionName ===
       "swapExactTokensForTokensSupportingFeeOnTransferTokens"
     ) {
-      await this.getReserveBalances();
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapTokensForExactETH") {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
@@ -289,7 +315,6 @@ class SwapData extends DerivedData {
         return;
       }
 
-      await this.getReserveBalances();
       await this._swap(amounts);
     } else if (this.functionName === "swapTokensForExactTokens") {
       let amounts;
@@ -307,9 +332,10 @@ class SwapData extends DerivedData {
         return;
       }
       console.log(`amounts: ${amounts}`);
-      await this.getReserveBalances();
       await this._swap(amounts);
     }
+    await this.getReserveBalances();
+    await this.calcPostReserves();
   }
 
   display() {
@@ -323,6 +349,11 @@ class SwapData extends DerivedData {
     logOutput.push(`amount1Out: ${this.amount1Out.toString()}`);
     logOutput.push(`reserve0: ${this.reserve0.toString()}`);
     logOutput.push(`reserve1: ${this.reserve1.toString()}`);
+    logOutput.push(`reserve0Post: ${this.reserve0Post.toString()}`);
+    logOutput.push(`reserve1Post: ${this.reserve1Post.toString()}`);
+    logOutput.push(`price: ${this.price.toString()}`);
+    logOutput.push(`pricePost: ${this.pricePost.toString()}`);
+    logOutput.push(`profit: ${this.profit.toString()}`);
 
     logOutput.push("=".repeat(100));
     console.log(chalk.green(logOutput.join("\n")));

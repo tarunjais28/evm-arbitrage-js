@@ -28,13 +28,17 @@ const decodeSwapFunction = async (tx, contracts) => {
     }
 
     let symbols = [];
+    let decimals = [];
     for (const path of decoded.path) {
       const token = new ethers.Contract(path, ERC20Abi, provider);
       try {
         const symbol = await token.symbol();
         symbols.push(symbol);
+
+        const decimal = await token.decimals();
+        decimals.push(decimal);
       } catch (error) {
-        symbols.push("UNKNOWN");
+        console.error(chalk.red("Error while inserting symbol and decimal"));
       }
     }
 
@@ -48,6 +52,7 @@ const decodeSwapFunction = async (tx, contracts) => {
       tx.from,
       tx.hash,
       tx.value,
+      decimals,
     );
 
     const argNames = swapFunctions[swapData.functionName] || [];

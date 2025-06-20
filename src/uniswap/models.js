@@ -201,6 +201,7 @@ class SwapData extends DerivedData {
   async swap() {
     if (this.functionName === "swapETHForExactTokens") {
       if (this.tokens[0] !== "WETH") {
+        console.error(chalk.red("Not a WETH"));
         return;
       }
       let amounts;
@@ -215,12 +216,14 @@ class SwapData extends DerivedData {
       }
 
       if (amounts[0] > this.value) {
+        console.error(chalk.red("amountIn greater than supplied amount."));
         return;
       }
 
       await this._swap(amounts);
     } else if (this.functionName === "swapExactETHForTokens") {
       if (this.tokens[0] !== "WETH") {
+        console.error(chalk.red("Not a WETH"));
         return;
       }
       let amounts;
@@ -232,6 +235,7 @@ class SwapData extends DerivedData {
       }
 
       if (amounts[amounts.length - 1] < this.args.amountOutMin) {
+        console.error(chalk.red("amountOut lesser than amountOutMin."));
         return;
       }
 
@@ -240,12 +244,14 @@ class SwapData extends DerivedData {
       this.functionName === "swapExactETHForTokensSupportingFeeOnTransferTokens"
     ) {
       if (this.tokens[0] !== "WETH") {
+        console.error(chalk.red("Not a WETH"));
         return;
       }
 
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapExactTokensForETH") {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
+        console.error(chalk.red("Not a WETH"));
         return;
       }
 
@@ -261,6 +267,7 @@ class SwapData extends DerivedData {
       }
 
       if (amounts[amounts.length - 1] < this.args.amountOutMin) {
+        console.error(chalk.red("amountOut lesser than amountOutMin."));
         return;
       }
 
@@ -269,6 +276,7 @@ class SwapData extends DerivedData {
       this.functionName === "swapExactTokensForETHSupportingFeeOnTransferTokens"
     ) {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
+        console.error(chalk.red("Not a WETH"));
         return;
       }
 
@@ -286,6 +294,7 @@ class SwapData extends DerivedData {
       }
 
       if (amounts[amounts.length - 1] < this.args.amountOutMin) {
+        console.error(chalk.red("amountOut lesser than amountOutMin."));
         return;
       }
 
@@ -297,6 +306,7 @@ class SwapData extends DerivedData {
       await this._swapSupportingFeeOnTransferTokens();
     } else if (this.functionName === "swapTokensForExactETH") {
       if (this.tokens[this.tokens.length - 1] !== "WETH") {
+        console.error(chalk.red("Not a WETH"));
         return;
       }
 
@@ -312,6 +322,7 @@ class SwapData extends DerivedData {
       }
 
       if (amounts[0] > this.args.amountInMax) {
+        console.error(chalk.red("amountIn greater than amountInMax."));
         return;
       }
 
@@ -329,6 +340,7 @@ class SwapData extends DerivedData {
       }
 
       if (amounts[0] > this.args.amountInMax) {
+        console.error(chalk.red("amountIn greater than amountInMax."));
         return;
       }
       console.log(`amounts: ${amounts}`);

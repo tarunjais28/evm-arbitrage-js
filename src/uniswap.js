@@ -3,6 +3,7 @@ const { SwapData } = require("./uniswap/models");
 const { iface, getPairAddress, provider } = require("./uniswap/contracts");
 const { funcNames, swapFunctions } = require("./uniswap/constants");
 const ERC20Abi = require("erc-20-abi");
+const chalk = require("chalk");
 
 const decodeSwapFunction = async (tx, contracts) => {
   try {
@@ -83,7 +84,13 @@ const decodeSwapFunction = async (tx, contracts) => {
     await swapData.swap();
     swapData.display();
   } catch (error) {
-    // console.error("Error in decodeSwapFunction:", error);
+    console.error(
+      chalk.red(
+        "Error in decodeSwapFunction:",
+        error,
+        JSON.stringify(tx, null, 2),
+      ),
+    );
   }
 };
 

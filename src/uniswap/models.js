@@ -116,19 +116,20 @@ class SwapData extends DerivedData {
       this.reserve1Post[i] =
         this.reserve1[i] + this.amount1In[i] - this.amount1Out[i];
 
-      this.price[i] =
-        (this.reserve1[i] * Math.pow(10, this.decimals[i])) /
-        (this.reserve0[i] * Math.pow(10, this.decimals[i + 1]));
+      let power0 = BigInt(Math.pow(10, Number(this.decimals[i])));
+      let power1 = BigInt(Math.pow(10, Number(this.decimals[i + 1])));
+      let power2 = BigInt(Math.pow(10, 20));
+
+      this.price[i] = (this.reserve1[i] * power0) / (this.reserve0[i] * power1);
 
       this.pricePost[i] =
-        (this.reserve1Post[i] * Math.pow(10, this.decimals[i])) /
-        (this.reserve0Post[i] * Math.pow(10, this.decimals[i + 1]));
+        (this.reserve1Post[i] * power0) / (this.reserve0Post[i] * power1);
 
-      if (this.price[i] == 0) {
-        this.profit[i] = 0;
+      if (this.price[i] == BigInt(0)) {
+        this.profit[i] = BigInt(0);
       } else {
         this.profit[i] =
-          ((this.pricePost[i] - this.price[i]) * 100) / this.price[i];
+          ((this.pricePost[i] - this.price[i]) * power2) / this.price[i];
       }
     }
   }
@@ -139,15 +140,15 @@ class SwapData extends DerivedData {
       const [token0] = sortTokens(input, this.path[i + 1]);
       const amountOut = amounts[i + 1];
       if (input.toLowerCase() === token0.toLowerCase()) {
-        this.amount0In.push(amounts[i]);
-        this.amount1In.push(0);
-        this.amount0Out.push(0);
-        this.amount1Out.push(amountOut);
+        this.amount0In.push(BigInt(amounts[i]));
+        this.amount1In.push(BigInt(0));
+        this.amount0Out.push(BigInt(0));
+        this.amount1Out.push(BigInt(amountOut));
       } else {
-        this.amount0In.push(0);
-        this.amount1In.push(amounts[i]);
-        this.amount0Out.push(amountOut);
-        this.amount1Out.push(0);
+        this.amount0In.push(BigInt(0));
+        this.amount1In.push(BigInt(amounts[i]));
+        this.amount0Out.push(BigInt(amountOut));
+        this.amount1Out.push(BigInt(0));
       }
     }
   }
@@ -185,15 +186,15 @@ class SwapData extends DerivedData {
       }
 
       if (input.toLowerCase() === token0.toLowerCase()) {
-        this.amount0In.push(amountInput);
-        this.amount1In.push(0);
-        this.amount0Out.push(0);
-        this.amount1Out.push(amountOut);
+        this.amount0In.push(BigInt(amountInput));
+        this.amount1In.push(BigInt(0));
+        this.amount0Out.push(BigInt(0));
+        this.amount1Out.push(BigInt(amountOut));
       } else {
-        this.amount0In.push(0);
-        this.amount1In.push(amountInput);
-        this.amount0Out.push(amountOut);
-        this.amount1Out.push(0);
+        this.amount0In.push(BigInt(0));
+        this.amount1In.push(BigInt(amountInput));
+        this.amount0Out.push(BigInt(amountOut));
+        this.amount1Out.push(BigInt(0));
       }
     }
   }

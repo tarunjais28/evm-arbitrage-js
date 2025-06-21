@@ -34,7 +34,7 @@ async function getReserves(pairAddress) {
   const pairContract = new ethers.Contract(pairAddress, UniswapPair, provider);
 
   let [reserve0, reserve1, _] = await pairContract.getReserves();
-  return [reserve0, reserve1];
+  return [BigInt(reserve0), BigInt(reserve1)];
 }
 
 async function balanceOf(contractAddress, address) {

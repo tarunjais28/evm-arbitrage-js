@@ -15,12 +15,25 @@ const provider = new ethers.WebSocketProvider(websocketEndpoint);
 const factoryContract = new ethers.Contract(
   factoryAddress,
   IUniswapV3Factory,
-  provider
+  provider,
 ) as ethers.Contract;
 
 const symbols: string[] = [
-  "ALCX", "DAI", "DRGN", "GOG", "ILV", "LINK", "NFD", "PAXG",
-  "SHX", "SUSHI", "TOKE", "USDC", "USDT", "WBTC", "WETH"
+  "ALCX",
+  "DAI",
+  "DRGN",
+  "GOG",
+  "ILV",
+  "LINK",
+  "NFD",
+  "PAXG",
+  "SHX",
+  "SUSHI",
+  "TOKE",
+  "USDC",
+  "USDT",
+  "WBTC",
+  "WETH",
 ];
 
 const symbolToTokenAddress: Map<string, string> = new Map([
@@ -65,17 +78,24 @@ async function fetchPools(): Promise<void> {
         continue;
       }
 
-      const [token0Sorted, token1Sorted] = sortAddresses(token0Address, token1Address);
+      const [token0Sorted, token1Sorted] = sortAddresses(
+        token0Address,
+        token1Address,
+      );
 
       for (const fee of feePercent) {
-        const task = factoryContract.getPool(token0Sorted, token1Sorted, fee)
+        const task = factoryContract
+          .getPool(token0Sorted, token1Sorted, fee)
           .then((addr: string) => {
             if (addr !== ethers.ZeroAddress) {
               console.log(`${token0}, ${token1}, ${fee}, ${addr}`);
             }
           })
           .catch((err: any) => {
-            console.log(`Error: ${token0}, ${token1}, ${fee}`, err?.message || err);
+            console.log(
+              `Error: ${token0}, ${token1}, ${fee}`,
+              err?.message || err,
+            );
           });
 
         tasks.push(task);

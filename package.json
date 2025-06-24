@@ -2,13 +2,13 @@
   "name": "mempool",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
-    "prettier": "npx prettier --write \"**/*.js\""
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "lint:fix": "prettier --write \"**/*.ts\"",
+    "lint": "prettier --check \"**/*.ts\""
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,8 @@
     "web3": "^4.16.0"
   },
   "devDependencies": {
-    "prettier": "3.5.3"
+    "@types/node": "^20.14.9",
+    "prettier": "3.5.3",
+    "typescript": "^5.5.2"
   }
 }

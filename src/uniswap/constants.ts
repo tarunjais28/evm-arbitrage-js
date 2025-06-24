@@ -1,7 +1,7 @@
-const factoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
-const routerAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
+const factoryAddress: string = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
+const routerAddress: string = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
-const swapFunctions = {
+const swapFunctions: { [key: string]: string[] } = {
   swapExactTokensForTokens: [
     "amountIn",
     "amountOutMin",
@@ -42,11 +42,6 @@ const swapFunctions = {
   ],
 };
 
-const funcNames = Object.keys(swapFunctions);
+const funcNames: string[] = Object.keys(swapFunctions);
 
-module.exports = {
-  factoryAddress,
-  routerAddress,
-  swapFunctions,
-  funcNames,
-};
+export { factoryAddress, routerAddress, swapFunctions, funcNames };

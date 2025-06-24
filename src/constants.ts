@@ -1,4 +1,4 @@
-const swapFunctions = {
+const swapFunctions: { [key: string]: string[] } = {
   swapETHForExactTokens: ["amountOut"],
   swapExactETHForTokens: ["amountOutMin"],
   swapExactETHForTokensSupportingFeeOnTransferTokens: ["amountOutMin"],
@@ -16,7 +16,7 @@ const swapFunctions = {
   swapTokensForExactTokens: ["amountOut", "amountInMax"],
 };
 
-const funcNames = [
+const funcNames: string[] = [
   "swapETHForExactTokens",
   "swapExactETHForTokens",
   "swapExactETHForTokensSupportingFeeOnTransferTokens",
@@ -28,7 +28,4 @@ const funcNames = [
   "swapTokensForExactTokens",
 ];
 
-module.exports = {
-  swapFunctions,
-  funcNames,
-};
+export { swapFunctions, funcNames };
